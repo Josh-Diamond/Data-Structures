@@ -1,7 +1,7 @@
 import sys
 sys.path.append('../doubly_linked_list')
 from doubly_linked_list import DoublyLinkedList
-
+# Queue will ADD to the BACK and REMOVE from the FRONT
 
 class Queue:
     def __init__(self):
@@ -21,3 +21,4 @@ class Queue:
 
     def len(self):
         return self.size
+

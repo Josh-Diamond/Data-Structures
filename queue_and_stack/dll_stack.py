@@ -1,7 +1,7 @@
 import sys
 sys.path.append('../doubly_linked_list')
 from doubly_linked_list import DoublyLinkedList
-
+# Stack will ADD to the FRONT and remove from the FRONT
 class Stack:
     def __init__(self):
         self.size = 0
@@ -19,3 +19,12 @@ class Stack:
 
     def len(self):
         return self.size
+
+
+# # Solution 1:
+# list = [1, 2, 3]
+# print(list[::-1])
+#
+# # Solution 2:
+# list.reverse()
+# print(list)
