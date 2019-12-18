@@ -12,7 +12,8 @@ class LRUCache:
         self.limit = limit
         self.size = 0
         self.dll = DoublyLinkedList()
-        self.storage = OrderedDict({"key": "Josh", "keyy": 21, "blue": "color"})
+        self.storage = {}
+        # self.storage = OrderedDict({"key": "Josh", "keyy": 21, "blue": "color"})
 
     """
     Retrieves the value associated with the given key. Also
@@ -21,14 +22,22 @@ class LRUCache:
     Returns the value associated with the key or None if the
     key-value pair doesn't exist in the cache.
     """
-    def get(self, key): # returns value from dictionary when key is provided
+    # def get(self, key): # returns value from dictionary when key is provided
+    #     if key in self.storage:
+    #         value = self.storage[key]
+    #         self.dll.move_to_front(value)
+    #         return value
+    #     else:
+    #         return None
+
+# ////////////
+    def get(self, key):
         if key in self.storage:
-            value = self.storage[key]
-            self.dll.move_to_front(value)
-            return value
+            node = self.storage[key]
+            self.dll.move_to_end(node)
+            return node.value[1]
         else:
             return None
-
 
     """
     Adds the given key-value pair to the cache. The newly-
@@ -44,19 +53,37 @@ class LRUCache:
     # move to front
     # IF MAX CAPACITY - remove tail and add to head
     # if key exists, re-assign new value
-    def set(self, key, value):
-        if key in self.storage: # Key/Value exists
-            self.storage[key] = value # Overwrite
-            self.dll.move_to_front(self.storage[key]) # Set key/value as head
-            return
-        if self.size == self.limit: # if MAX CAPACITY is reached
-            self.storage.popitem(last=True) #remove tail
-            self.size -= 1 # adjust size after pop
-        self.storage[key] = value # add node to dict
-        self.size += 1 # adjust size after adding new node
-        self.storage.move_to_end(key, False) # move newly added node to head
-        return self.storage
+    # def set(self, key, value):
+    #     if key in self.storage: # Key/Value exists
+    #         self.storage[key] = value # Overwrite
+    #         self.dll.move_to_front(self.storage[key]) # Set key/value as head
+    #         return
+    #     if self.size == self.limit: # if MAX CAPACITY is reached
+    #         self.storage.popitem(last=True) #remove tail
+    #         self.size -= 1 # adjust size after pop
+    #     self.storage[key] = value # add node to dict
+    #     self.size += 1 # adjust size after adding new node
+    #     self.storage.move_to_end(key, False) # move newly added node to head
+    #     return self.storage
 
+    # ////////////////
+    def set(self, key, value):
+       # check and see if key is in cache
+        if key in self.storage:
+           node = self.storage[key]
+           node.value = (key, value)
+           self.dll.move_to_end(node)
+           return
+        # If it is int he cache move to front and update value
+        if self.size == self.limit:
+            del self.storage[self.dll.head.value[0]] # deletes first item in tuple - (key value) pair
+            self.dll.remove_from_head()
+            self.size -= 1
+        # If not Add to the front of the cache
+        # Defining tail as most recent and head as oldest
+        self.dll.add_to_tail((key, value))
+        self.storage[key] = self.dll.tail
+        self.size += 1
 
 
 test = LRUCache()
