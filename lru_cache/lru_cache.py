@@ -12,8 +12,8 @@ class LRUCache:
         self.limit = limit
         self.size = 0
         self.dll = DoublyLinkedList()
-        self.storage = {}
-        # self.storage = OrderedDict({"key": "Josh", "keyy": 21, "blue": "color"})
+        # self.storage = {}
+        self.storage = OrderedDict({"key": "Josh", "keyy": 21, "blue": "color"})
 
     """
     Retrieves the value associated with the given key. Also
