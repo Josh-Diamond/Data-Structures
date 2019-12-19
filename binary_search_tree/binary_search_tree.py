@@ -44,7 +44,6 @@ class BinarySearchTree:
             else:
                 return self.right.contains(target)
 
-
     # Return the maximum value found in the tree
     def get_max(self):
         max_value = self.value
@@ -54,7 +53,6 @@ class BinarySearchTree:
                 max_value = self.value # assigning max_value to that larger value
             self = self.right # moves to right and that becomes the new node to compare against
         return max_value # return max value after while loop breaks due to no more nodes for comparison
-
 
     # Call the function `cb` on the value of each node
     # You may use a recursive or iterative approach
@@ -68,15 +66,37 @@ class BinarySearchTree:
     # Print all the values in order from low to high
     # Hint:  Use a recursive, depth first traversal
     def in_order_print(self, node):
-        pass
+        if node: # If a node is passed in recursively, run code block, otherwise end
+            self.in_order_print(node.left) # pass in left
+            print(node.value) # print current value
+            self.in_order_print(node.right) # pass in right
+
     # Print the value of every node, starting with the given node,
     # in an iterative breadth first traversal
     def bft_print(self, node):
-        pass
+        queue = Queue() # instantiate Queue Class
+        queue.enqueue(self) # add root to (end of) queue
+        while queue.len() > 0: # While there is something in queue
+            current_node = queue.dequeue() # grab node from front of queue
+            print(current_node.value) # DO THE THING - Print current_node value
+            if current_node.left: # If left
+                queue.enqueue(current_node.left) # Add left to end of queue
+            if current_node.right: # If right
+                queue.enqueue(current_node.right)
+
     # Print the value of every node, starting with the given node,
     # in an iterative depth first traversal
     def dft_print(self, node):
-        pass
+        stack = Stack() # instantiate Stack Class
+        stack.push(self) # add root to stack
+        while stack.len() > 0: # While there is something in stack
+            current_node = stack.pop() # Grab (top) node from stack
+            print(current_node.value) # DO THE THING - Print current_node value
+            if current_node.left: # If left
+                stack.push(current_node.left) # Add left to stack
+            if current_node.right: # If right
+                stack.push(current_node.right) # Add right to stack
+
     # STRETCH Goals -------------------------
     # Note: Research may be required
     # Print In-order recursive DFT
